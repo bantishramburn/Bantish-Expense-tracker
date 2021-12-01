@@ -6,8 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expense Tracker</title>
     <link href="css/site.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/validation.js"></script>
 </head>
 <body>
-    <h1>Expense Tracker</h1>
+ 
+    <div class="main-wrapper">
+        <h1>Expense Tracker</h1>
+        <div class="main-menu">
+            <span class="menu-icon" onclick="showmenu()">
+                <span></span>
+            </span>
+            <ul>
+                <li onclick="showtab('tab-stats')">View stats</li>
+                <li onclick="showtab('tab-income')">Income</li>
+                <li onclick="showtab('tab-expenses')">Expenses</li>
+                <li onclick="showtab('tab-categories')">Manage categories</li>
+             
+            </ul>
+        </div>
+        <div id="tabs">
+            <div class="tab" id="tab-stats">stats</div>
+            <div class="tab"  id="tab-income">income</div>
+            <div class="tab"  id="tab-expenses">expenses</div>
+            <div class="tab"  id="tab-categories">cat</div>
+        </div>
+    </div>
+
 </body>
 </html>
