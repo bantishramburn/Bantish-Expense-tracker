@@ -11,7 +11,7 @@ let incomes=[/*{
 ];
 //array of incomes as we can have multiple income sources
 let expenses=[/*{
-    name:'Eat dholl puri',
+    description:'Eat dholl puri',
     amount:25,
     date: 2021-11-27,
     category:'Eating out'
@@ -21,23 +21,12 @@ let expenses=[/*{
 //default categories for expenses
 let categories=[
     {
-        name:'Rent',
-        default:true
-    },
-    {
-        name:'Loan',
-        default:true
-    },
-    {
-        name:'Utilities',
+        name:'Car',
         default:true,
+
     },
     {
         name:'Clothing',
-        default:true,
-    },
-    {
-        name:'Car',
         default:true
     },
     {
@@ -45,13 +34,43 @@ let categories=[
         default:true,
     },
     {
+        name:'Loan',
+        default:true,
+    },
+    {
+        name:'Rent',
+        default:true
+    },
+    {
+        name:'Utilities',
+        default:true,
+    },
+    {
         name:'Other',
         default:true,
     }
 ]
-function render(){ // this function is called after each action performed ex: after adding an expense or after adding an income or any other action that requires the data on screen to be updated.
 
+function render(){ // this function is called after each action performed ex: after adding an expense or after adding an income or any other action that requires the data on screen to be updated.
+    
+    for(let i in categories){
+    const newDiv = document.createElement("div");
+    newDiv.classList.add(`cat_${i}`);
+    newDiv.classList.add(`category`);
+    if(categories[i].default==true)
+    newDiv.classList.add(`default`);
+  
+    // and give it some content
+    const newContent = document.createTextNode(categories[i].name);
+  
+    // add the text node to the newly created div
+    newDiv.appendChild(newContent);
+    document.querySelector('#tab-categories .content').append(newDiv);
+    }
 }
+window.onload=(event) => {
+    render();
+  };
 
 function showmenu(){
     if(document.querySelector('.main-menu ul').classList.contains('show')){

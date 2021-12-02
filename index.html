@@ -13,11 +13,11 @@
  
     <div class="main-wrapper">
         <h1>Expense Tracker</h1>
-        <div class="main-menu">
-            <span class="menu-icon" onclick="showmenu()">
-                <span></span>
-            </span>
-            <ul>
+        <span class="menu-icon" onclick="showmenu()">
+            <span></span>
+        </span>
+        <div class="main-menu ">
+            <ul class="shadow">
                 <li onclick="showtab('tab-stats')">View stats</li>
                 <li onclick="showtab('tab-income')">Income</li>
                 <li onclick="showtab('tab-expenses')">Expenses</li>
@@ -29,7 +29,7 @@
             <div class="tab" id="tab-stats">stats</div>
             <div class="tab"  id="tab-income">income</div>
             <div class="tab"  id="tab-expenses">expenses</div>
-            <div class="tab"  id="tab-categories">cat</div>
+            <div class="tab"  id="tab-categories"><div class="content"></div><span class="addbtn shadow"></span></div>
         </div>
     </div>
 

@@ -5,15 +5,15 @@
 }
 
 .main-menu{
-    padding: 20px;
     position: absolute;
+  
 }
 .menu-icon{
     cursor: pointer;
     width: 30px;
     height: 30px;
     display: block;
-    background-color: #DDD;
+
 }
 .menu-icon span{
     border-top:2px solid #000; 
@@ -41,26 +41,86 @@
 .main-menu ul{
     opacity: 0;
     transform: scale(0);
-    background-color: #DDD;
+    background-color: rgba(0,255,0,0.8);;
     margin: 0;
     transition: all 0.2s ease-in-out;
     transform-origin: top left;
+
 }
 .main-menu ul li{
     cursor: pointer;
 }
 
 .main-menu ul.show{
-    display: block;
+ 
     opacity: 1;
     transform: scale(1);
     transition: all 0.2s ease-in-out;
+    display: block;
 }
 .tab{
     display: none;
     background-color: #EEE;
+    margin-top: 100px;
+    padding:10px;
+    position: relative;
 }
 
 .tab.active{
+    display: flex;
+    flex-direction: column;
+}
+
+.tab .category{
+    padding: 10px;
+    background-color: purple;
+    margin-top: 10px;
+    border-radius: 20px;
+    color: #FFF;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.tab .category.default{
+    cursor: default;
+    background: #DDD;
+    color: #bbb;
+}
+.addbtn{
+    background-color:#000;
+    position: fixed;
+    border-radius: 50%;
     display: block;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    bottom: 20px;
+    right: 20px;
+}
+.addbtn:before{
+    content: "";
+    display: block;
+    width: 10px;
+    border-top: 2px solid #FFF;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%) rotate(90deg);
+}
+.addbtn:after{
+    content: "";
+    display: block;
+    width: 10px;
+    border-top: 2px solid #FFF;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.shadow{
+    box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
+    -webkit-box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
+    -moz-box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
 }
