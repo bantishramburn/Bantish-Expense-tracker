@@ -1,3 +1,7 @@
+@import url(stylesheet.css);
+body{
+    font-family: montserratlight;
+}
 .main-wrapper{
     position: relative;
     max-width: 1000px;
@@ -60,7 +64,7 @@
 }
 .tab{
     display: none;
-    background-color: #EEE;
+  
     margin-top: 100px;
     padding:10px;
     position: relative;
@@ -123,4 +127,40 @@
     box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
     -webkit-box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
     -moz-box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
+}
+
+.tab .expense{
+    padding: 10px;
+    background-color: rgb(243,243,243);
+    margin-top: 10px;
+    border-radius: 20px;
+    color: rgb(23,23,23);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.expense{
+    display: flex;
+}
+
+.expense .column-1{
+    flex: 1;
+}
+.expense .column-2{
+    flex: 3;
+}
+.expense .column-2 .row-1{
+    font-family: montserratbold;
+    margin-bottom: 8px;
+}
+.expense .column-2 .row-2{
+    font-size: 14px;
+    color:rgb(142, 142, 142);
+}
+.expense .column-3{
+    flex: 2;
+    font-family: montserratbold;
+    display: flex;
+    justify-content: right;
+    align-items: center;
 }
