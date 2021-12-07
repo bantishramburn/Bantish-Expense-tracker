@@ -19,7 +19,7 @@
         <div class="main-menu ">
             <ul class="shadow">
                 <li onclick="showtab('tab-stats')">View stats</li>
-                <li onclick="showtab('tab-income')">Income</li>
+                <li onclick="showtab('tab-incomes')">Income</li>
                 <li onclick="showtab('tab-expenses')">Expenses</li>
                 <li onclick="showtab('tab-categories')">Manage categories</li>
              
@@ -27,11 +27,17 @@
         </div>
         <div id="tabs">
             <div class="tab" id="tab-stats">stats</div>
-            <div class="tab"  id="tab-income">income</div>
+            <div class="tab"  id="tab-incomes"><div class="content"></div><span class="addbtn shadow"></span></div>
             <div class="tab"  id="tab-expenses"><div class="content"></div><span class="addbtn shadow"></div>
             <div class="tab"  id="tab-categories"><div class="content"></div><span class="addbtn shadow"></span></div>
         </div>
     </div>
-
+<div class="form-modal-overlay">
+    <div class="form-modal">
+        <div class="form-modal-title">Add new category</div>
+        <div class="form-modal-content">xxxxx</div>
+        <div class="form-modal-action"><button class="close">Cancel</button></div>
+    </div>
+</div>
 </body>
 </html>

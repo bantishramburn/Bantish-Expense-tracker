@@ -1,13 +1,18 @@
-let incomes=[/*{
+let incomes=[{
     name:'fulltime job',
     income:5000,
-    date: 2021-11-27
+    date: '2021/11/27'
 },
 {
     name:'partime job',
     income:3000,
-    date: 2021-11-27
-}*/
+    date: '2021/11/27'
+},
+{
+    name: 'others',
+    income: 200,
+    date:'2021/12/05'
+}
 ];
 //array of incomes as we can have multiple income sources
 let expenses=[
@@ -69,6 +74,10 @@ let categories=[
 function render(){ // this function is called after each action performed ex: after adding an expense or after adding an income or any other action that requires the data on screen to be updated.
     
     document.querySelector('#tab-categories .content').innerHTML="";
+    document.querySelector('#tab-incomes .content').innerHTML="";
+    document.querySelector('#tab-expenses .content').innerHTML="";
+    document.querySelector('#tab-stats').innerHTML="";
+    
     //rendering categories
     for(let i in categories){
         const newDiv = document.createElement("div");
@@ -87,6 +96,7 @@ function render(){ // this function is called after each action performed ex: af
     }
 
     //rendering expenses
+    let totalExpenses=0;
     for(let i in expenses){
         const newDiv = document.createElement("div");
         newDiv.classList.add(`exp_${i}`);
@@ -114,7 +124,7 @@ function render(){ // this function is called after each action performed ex: af
         expenseAmountDiv.classList.add('column-3');
         const amount=document.createTextNode(`Rs ${expenses[i].amount.toFixed(2)}`);
         expenseAmountDiv.appendChild(amount);
-        
+        totalExpenses+=expenses[i].amount;
 
         //const newContent = document.createTextNode(expenses[i].description);
 
@@ -124,6 +134,55 @@ function render(){ // this function is called after each action performed ex: af
 
         document.querySelector('#tab-expenses .content').append(newDiv);
     }
+    const totalExpensesDiv=document.createElement("div");
+    totalExpensesDiv.classList.add('total');
+    totalExpensesDiv.append(toSpan('Rs','rs'));
+    totalExpensesDiv.append(toSpan(totalExpenses.toFixed(2),'amount'));
+    totalExpensesDiv.append(toSpan('MUR','mur'));
+    document.querySelector('#tab-expenses .content').prepend(totalExpensesDiv);
+
+    let totalIncome=0;
+    for(let i in incomes){
+        const newDiv = document.createElement("div");
+        newDiv.classList.add(`inco_${i}`);
+        newDiv.classList.add(`income`);
+
+
+        const nameDiv= document.createElement("div");
+        nameDiv.classList.add('column-1');
+        //add title of income to first column in first row
+        const rowIncomeTitleDiv = document.createElement("div");
+        rowIncomeTitleDiv.classList.add('row-1');
+        rowIncomeTitleDiv.appendChild(document.createTextNode(incomes[i].name));
+        nameDiv.appendChild(rowIncomeTitleDiv);
+
+        //add date of income to first column in second row 
+        const rowIncomeDateDiv = document.createElement("div");
+        rowIncomeDateDiv.classList.add('row-2');
+        rowIncomeDateDiv.appendChild(document.createTextNode(incomes[i].date));
+        nameDiv.appendChild(rowIncomeDateDiv);
+
+        // add income to 2nd column
+        const incomeDiv= document.createElement("div");
+        incomeDiv.classList.add('column-2');
+        const amount=document.createTextNode(`Rs ${incomes[i].income}`);
+        incomeDiv.appendChild(amount);
+
+        totalIncome+=incomes[i].income;
+
+
+        newDiv.appendChild(nameDiv);
+        newDiv.appendChild(incomeDiv);
+
+        
+        document.querySelector('#tab-incomes .content').append(newDiv);
+    }
+    const totalIncomeDiv=document.createElement("div");
+    totalIncomeDiv.classList.add('total');
+    totalIncomeDiv.append(toSpan('Rs','rs'));
+    totalIncomeDiv.append(toSpan(totalIncome.toFixed(2),'amount'));
+    totalIncomeDiv.append(toSpan('MUR','mur'));
+    document.querySelector('#tab-incomes .content').prepend(totalIncomeDiv);
 
 }
 window.onload=(event) => {
@@ -146,4 +205,12 @@ function showtab(tab){
 
     document.querySelector(`#${tab}`).classList.add('active');
     
+}
+
+
+function toSpan(str,classname){
+    const span=document.createElement('span');
+    span.classList.add(classname);
+    span.append(document.createTextNode(str));
+    return span;
 }
