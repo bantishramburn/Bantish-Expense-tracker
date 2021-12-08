@@ -214,3 +214,48 @@ function toSpan(str,classname){
     span.append(document.createTextNode(str));
     return span;
 }
+
+function cancel(){
+
+    document.querySelector('.form-modal-overlay').classList.add('hidden');
+    setTimeout(function(){
+        document.querySelector('.form-modal-title').innerHTML='';
+        document.querySelector('.form-modal-content').innerHTML='';
+        document.querySelector('.form-modal-action .column-2').innerHTML='';
+    },1000);
+   
+}
+
+function showAddCategoryModal(){
+    document.querySelector('.form-modal-title').innerHTML='Add new category';
+    const btn=document.createElement('button');
+    btn.classList.add('btnsave');
+    btn.addEventListener("click", saveCategory);
+    btn.append(document.createTextNode('Save'));
+
+    const categoryInput=document.createElement('input');
+    categoryInput.classList.add('cat_input');
+    categoryInput.setAttribute('type','text');
+    categoryInput.setAttribute('placeholder','Category name');
+    categoryInput.addEventListener('keyup',activateCatSave);
+    document.querySelector('.form-modal-content').append(categoryInput);
+
+    document.querySelector('.form-modal-action .column-2').append(btn);
+
+
+    document.querySelector('.form-modal-overlay').classList.remove('hidden');
+}
+
+function saveCategory(){
+        categories.push({name:document.querySelector('.cat_input').value,default:false});
+        render();
+        cancel();
+}
+
+function activateCatSave(){
+    if(document.querySelector('.cat_input').value.length>0){
+        document.querySelector('.btnsave').classList.add('active');
+    }else{
+        document.querySelector('.btnsave').classList.remove('active');
+    }
+}
