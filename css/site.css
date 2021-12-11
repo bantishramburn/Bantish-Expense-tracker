@@ -1,4 +1,50 @@
-@import url(stylesheet.css);
+
+@font-face {
+    font-family: 'montserratblack';
+    src: url('../assets/fonts/montserrat-black-webfont.woff2') format('woff2'),
+         url('../assets/fonts/montserrat-black-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'montserratbold';
+    src: url('../assets/fonts/montserrat-bold-webfont.woff2') format('woff2'),
+         url('../assets/fonts/montserrat-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'montserratmedium';
+    src: url('../assets/fonts/montserrat-medium-webfont.woff2') format('woff2'),
+         url('../assets/fonts/montserrat-medium-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+
+
+@font-face {
+    font-family: 'montserratlight';
+    src: url('../assets/fonts/montserrat-light-webfont.woff2') format('woff2'),
+         url('../assets/fonts/montserrat-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
 body{
     font-family: montserratlight;
 }
@@ -125,8 +171,6 @@ body{
 
 .shadow{
     box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
-    -webkit-box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
-    -moz-box-shadow: -1px -1px 12px -3px rgba(0,0,0,0.83);
 }
 #tabs{
     min-width: 320px;
@@ -187,7 +231,7 @@ body{
     flex: 1;
     display: flex;
     justify-content: right;
-    align-items: left;
+    align-items: flex-start;
     flex-direction: column;
 }
 

@@ -1,44 +1,12 @@
-let incomes=[{
-    name:'fulltime job',
-    income:5000,
-    date: '2021-11-25'
-},
-{
-    name:'partime job',
-    income:3000,
-    date: '2021-11-27'
-},
-{
-    name: 'others',
-    income: 200,
-    date:'2021-12-05'
-}
-];
 //array of incomes as we can have multiple income sources
-let expenses=[
-    {
-        description:'Eat dholl puri',
-        amount:25,
-        date: '2021-12-03',
-        category:'Eating out',
-     
-    },
-    {
-        description:'Car insurance',
-        amount:10000,
-        date: '2021-12-09',
-        category:'Car',
-      
-    },
-    {
-        description:'Paid home loan',
-        amount:15000.50,
-        date: '2021-12-09',
-        category:'Loan',
-     
+let incomes=[];
 
-    }
-]
+
+//array of expenses as we can have multiple expenses
+let expenses=[];
+
+
+//array of categories as we can have multiple expense categories
 let categories=[
     {
         name:'Car',
@@ -70,6 +38,24 @@ let categories=[
         default:true,
     }
 ]
+//store default categories to localstorage
+let categoryObject = localStorage.getItem('categoryObject');
+if(categoryObject ==null){
+    localStorage.setItem('categoryObject', JSON.stringify(categories));
+}
+categories=JSON.parse(categoryObject);
+
+//retrieve expenses from localstorage
+let expenseObject = localStorage.getItem('expenseObject');
+if(expenseObject !=null){
+    expenses=JSON.parse(expenseObject);
+}
+
+//retrieve income from localstorage
+let incomeObject = localStorage.getItem('incomeObject');
+if(incomeObject !=null){
+    incomes=JSON.parse(incomeObject);
+}
 
 function render(){ // this function is called after each action performed ex: after adding an expense or after adding an income or any other action that requires the data on screen to be updated.
     
@@ -99,6 +85,7 @@ function render(){ // this function is called after each action performed ex: af
 
     
     let totalExpenses=0;
+    if(expenses!=null)
     expenses.sort(function(a,b){
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
@@ -182,6 +169,7 @@ function render(){ // this function is called after each action performed ex: af
         const newDiv = document.createElement("div");
         newDiv.classList.add(`inco_${i}`);
         newDiv.classList.add(`income`);
+      
 
 
         const nameDiv= document.createElement("div");
@@ -284,6 +272,9 @@ function showAddCategoryModal(){
 
 function saveCategory(){
         categories.push({name:document.querySelector('.cat_input').value,default:false});
+        //save to local storage
+        localStorage.setItem('categoryObject', JSON.stringify(categories));
+    
         render();
         cancel();
 }
@@ -375,6 +366,7 @@ function showAddExpenseModal(){
     expenseDateInput.classList.add('expense_date');
     expenseDateInput.setAttribute('type','date');
     expenseDateInput.setAttribute('placeholder', 'YYYY-MM-DD');
+    expenseDateInput.setAttribute('max',new Date().toISOString().split("T")[0]);
 
     document.querySelector('.form-modal-content').append(expenseDateInput);
 
@@ -384,11 +376,60 @@ function showAddExpenseModal(){
 }
 
 function saveExpense(){
+ 
+    expenses=expenses||[];
+    console.log(expenses);
         expenses.push({description:document.querySelector('.expense_description').value,category:document.querySelector('.expense_category').value,amount:parseFloat(document.querySelector('.expense_amount').value),date:document.querySelector('.expense_date').value});
+        localStorage.setItem('expenseObject', JSON.stringify(expenses));
         render();
         cancel();
 }
 
+//ADD INCOME FORM
+function showAddIncomeModal(){
+    document.querySelector('.form-modal-title').innerHTML='Add new Income';
+    const btn=document.createElement('button');
+    btn.classList.add('btnsave');
+    btn.classList.add('active');
+    btn.addEventListener("click", saveIncome);
+    btn.append(document.createTextNode('Save'));
+
+
+    const incomenameInput=document.createElement('input');
+    incomenameInput.classList.add('income_name');
+    incomenameInput.setAttribute('type','text');
+    incomenameInput.setAttribute('placeholder','Name');
+
+    document.querySelector('.form-modal-content').append(incomenameInput);
+
+    const incomeamountInput=document.createElement('input');
+    incomeamountInput.classList.add('income_amount');
+    incomeamountInput.setAttribute('type','float');
+    incomeamountInput.setAttribute('placeholder', 'Amount');
+
+    document.querySelector('.form-modal-content').append(incomeamountInput);
+
+
+    const incomeDateInput=document.createElement('input');
+    incomeDateInput.classList.add('income_date');
+    incomeDateInput.setAttribute('type','date');
+    incomeDateInput.setAttribute('placeholder', 'YYYY-MM-DD');
+    incomeDateInput.setAttribute('max',new Date().toISOString().split("T")[0]);
+
+    document.querySelector('.form-modal-content').append(incomeDateInput);
+
+
+    document.querySelector('.form-modal-action .column-2').append(btn);
+    document.querySelector('.form-modal-overlay').classList.remove('hidden');
+}
+
+function saveIncome(){
+    incomes=incomes||[];
+    incomes.push({name:document.querySelector('.income_name').value,income:parseFloat(document.querySelector('.income_amount').value),date:document.querySelector('.income_date').value});
+    localStorage.setItem('incomeObject', JSON.stringify(incomes));
+    render();
+    cancel();
+}
 function dateto_timeline_name(datestr){
 	const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 	const date1array=datestr.split('-');
