@@ -310,8 +310,14 @@ body{
     align-items: center;
  
 }
+.input-wrapper{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
 .form-modal-content input,.form-modal-content select{
-    margin:  4px 0;
+    margin: 10px 0 2px 0;
     width: 200px;
 }
 .form-modal-content select{
@@ -321,6 +327,9 @@ body{
 .form-modal-content select option{
 line-height: 1.2rem;
 }
+.form-modal-content form{
+    width: 100%;
+}
 .form-modal-title{
     height: 160px;
     background: rgba(238, 238, 238, 0.4);
@@ -329,6 +338,8 @@ line-height: 1.2rem;
     display: flex;
     justify-content: center;
     font-family: montserratmedium;
+    border-bottom-right-radius:unset;
+    border-bottom-left-radius: unset;
 }
 .btnlink{
     text-decoration: underline;
@@ -356,10 +367,11 @@ line-height: 1.2rem;
    pointer-events: none;
 }
 .form-modal-action{
+    margin-top: 30px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding-bottom: 20px;
+    
 }
 .column-1{
     flex: 1;
@@ -397,4 +409,10 @@ font-family: montserratlight;
     font-family: 'montserratbold';
     margin-top: 15px;
     font-size: 14px;
+}
+
+.errSpan{
+    font-size: 14px;
+    color: red;
+    width: 222px;
 }

@@ -253,31 +253,47 @@ function cancel(){
 function showAddCategoryModal(){
     document.querySelector('.form-modal-title').innerHTML='Add new category';
     const btn=document.createElement('button');
+    btn.setAttribute('type','submit');
     btn.classList.add('btnsave');
-    btn.addEventListener("click", saveCategory);
     btn.append(document.createTextNode('Save'));
+
+    const form=document.createElement('form');
+    form.addEventListener('submit',saveCategory);
+  
+    const inputDivWrapper=document.createElement('div');
+    inputDivWrapper.classList.add('input-wrapper');
 
     const categoryInput=document.createElement('input');
     categoryInput.classList.add('cat_input');
     categoryInput.setAttribute('type','text');
     categoryInput.setAttribute('placeholder','Category name');
     categoryInput.addEventListener('keyup',activateCatSave);
-    document.querySelector('.form-modal-content').append(categoryInput);
+    inputDivWrapper.append(categoryInput);
+    form.append(inputDivWrapper);
 
-    document.querySelector('.form-modal-action .column-2').append(btn);
+    const formModalAction=document.createElement('div');
+    formModalAction.classList.add('form-modal-action');
+    const col1=document.createElement('div');
+    col1.classList.add('column-1');
+    const cancelbtn=document.createElement('button');
+    cancelbtn.setAttribute('type','button');
+    cancelbtn.classList.add('btnlink');
+    cancelbtn.innerHTML='Cancel';
+    cancelbtn.addEventListener('click',cancel);
+    col1.append(cancelbtn);
+    const col2=document.createElement('div');
+    col2.classList.add('column-2');
+    col2.append(btn);
+    formModalAction.append(col1);
+    formModalAction.append(col2);
+    form.append(formModalAction);
 
+    document.querySelector('.form-modal-content').append(form);
 
     document.querySelector('.form-modal-overlay').classList.remove('hidden');
 }
 
-function saveCategory(){
-        categories.push({name:document.querySelector('.cat_input').value,default:false});
-        //save to local storage
-        localStorage.setItem('categoryObject', JSON.stringify(categories));
-    
-        render();
-        cancel();
-}
+
 
 function activateCatSave(){
     if(document.querySelector('.cat_input').value.length>0){
@@ -323,7 +339,6 @@ function cancel(){
     setTimeout(function(){
         document.querySelector('.form-modal-title').innerHTML='';
         document.querySelector('.form-modal-content').innerHTML='';
-        document.querySelector('.form-modal-action .column-2').innerHTML='';
     },1000);
    
 }
@@ -331,10 +346,17 @@ function cancel(){
 function showAddExpenseModal(){
     document.querySelector('.form-modal-title').innerHTML='Add new Expense';
     const btn=document.createElement('button');
+    btn.setAttribute('type','submit');
     btn.classList.add('btnsave');
     btn.classList.add('active');
-    btn.addEventListener("click", saveExpense);
+
     btn.append(document.createTextNode('Save'));
+
+    const form=document.createElement('form');
+    form.addEventListener('submit',saveExpense);
+  
+    const inputDivWrapper=document.createElement('div');
+    inputDivWrapper.classList.add('input-wrapper');
 
     const expenseCatSelect=document.createElement('select');
     expenseCatSelect.classList.add('expense_category');
@@ -344,22 +366,22 @@ function showAddExpenseModal(){
         catoption.innerHTML=categories[i].name;
         expenseCatSelect.appendChild(catoption);
     }
-
-    document.querySelector('.form-modal-content').append(expenseCatSelect);
+    inputDivWrapper.append(expenseCatSelect);
+ 
 
     const expensenameInput=document.createElement('input');
     expensenameInput.classList.add('expense_description');
     expensenameInput.setAttribute('type','text');
     expensenameInput.setAttribute('placeholder','Name');
-
-    document.querySelector('.form-modal-content').append(expensenameInput);
+    inputDivWrapper.append(expensenameInput);
+  
 
     const expenseamountInput=document.createElement('input');
     expenseamountInput.classList.add('expense_amount');
     expenseamountInput.setAttribute('type','float');
     expenseamountInput.setAttribute('placeholder', 'Amount');
+    inputDivWrapper.append(expenseamountInput);
 
-    document.querySelector('.form-modal-content').append(expenseamountInput);
 
 
     const expenseDateInput=document.createElement('input');
@@ -367,47 +389,63 @@ function showAddExpenseModal(){
     expenseDateInput.setAttribute('type','date');
     expenseDateInput.setAttribute('placeholder', 'YYYY-MM-DD');
     expenseDateInput.setAttribute('max',new Date().toISOString().split("T")[0]);
+    inputDivWrapper.append(expenseDateInput);
+    form.append(inputDivWrapper);
 
-    document.querySelector('.form-modal-content').append(expenseDateInput);
+        
+    const formModalAction=document.createElement('div');
+    formModalAction.classList.add('form-modal-action');
+    const col1=document.createElement('div');
+    col1.classList.add('column-1');
+    const cancelbtn=document.createElement('button');
+    cancelbtn.setAttribute('type','button');
+    cancelbtn.classList.add('btnlink');
+    cancelbtn.innerHTML='Cancel';
+    cancelbtn.addEventListener('click',cancel);
+    col1.append(cancelbtn);
+    const col2=document.createElement('div');
+    col2.classList.add('column-2');
+    col2.append(btn);
 
+    formModalAction.append(col1);
+    formModalAction.append(col2);
+    form.append(formModalAction);
 
-    document.querySelector('.form-modal-action .column-2').append(btn);
+    document.querySelector('.form-modal-content').append(form);
+
     document.querySelector('.form-modal-overlay').classList.remove('hidden');
 }
 
-function saveExpense(){
- 
-    expenses=expenses||[];
-    console.log(expenses);
-        expenses.push({description:document.querySelector('.expense_description').value,category:document.querySelector('.expense_category').value,amount:parseFloat(document.querySelector('.expense_amount').value),date:document.querySelector('.expense_date').value});
-        localStorage.setItem('expenseObject', JSON.stringify(expenses));
-        render();
-        cancel();
-}
 
 //ADD INCOME FORM
 function showAddIncomeModal(){
     document.querySelector('.form-modal-title').innerHTML='Add new Income';
     const btn=document.createElement('button');
+    btn.setAttribute('type','submit');
     btn.classList.add('btnsave');
     btn.classList.add('active');
-    btn.addEventListener("click", saveIncome);
+
     btn.append(document.createTextNode('Save'));
 
+    const form=document.createElement('form');
+    form.addEventListener('submit',saveIncome);
+  
+    const inputDivWrapper=document.createElement('div');
+    inputDivWrapper.classList.add('input-wrapper');
 
     const incomenameInput=document.createElement('input');
     incomenameInput.classList.add('income_name');
     incomenameInput.setAttribute('type','text');
     incomenameInput.setAttribute('placeholder','Name');
+    inputDivWrapper.append(incomenameInput);
 
-    document.querySelector('.form-modal-content').append(incomenameInput);
 
     const incomeamountInput=document.createElement('input');
     incomeamountInput.classList.add('income_amount');
     incomeamountInput.setAttribute('type','float');
     incomeamountInput.setAttribute('placeholder', 'Amount');
-
-    document.querySelector('.form-modal-content').append(incomeamountInput);
+    inputDivWrapper.append(incomeamountInput);
+  
 
 
     const incomeDateInput=document.createElement('input');
@@ -415,21 +453,33 @@ function showAddIncomeModal(){
     incomeDateInput.setAttribute('type','date');
     incomeDateInput.setAttribute('placeholder', 'YYYY-MM-DD');
     incomeDateInput.setAttribute('max',new Date().toISOString().split("T")[0]);
+    inputDivWrapper.append(incomeDateInput);
+    form.append(inputDivWrapper);
 
-    document.querySelector('.form-modal-content').append(incomeDateInput);
 
+    const formModalAction=document.createElement('div');
+    formModalAction.classList.add('form-modal-action');
+    const col1=document.createElement('div');
+    col1.classList.add('column-1');
+    const cancelbtn=document.createElement('button');
+    cancelbtn.setAttribute('type','button');
+    cancelbtn.classList.add('btnlink');
+    cancelbtn.innerHTML='Cancel';
+    cancelbtn.addEventListener('click',cancel);
+    col1.append(cancelbtn);
+    const col2=document.createElement('div');
+    col2.classList.add('column-2');
+    col2.append(btn);
 
-    document.querySelector('.form-modal-action .column-2').append(btn);
+    formModalAction.append(col1);
+    formModalAction.append(col2);
+    form.append(formModalAction);
+    document.querySelector('.form-modal-content').append(form);
+
     document.querySelector('.form-modal-overlay').classList.remove('hidden');
 }
 
-function saveIncome(){
-    incomes=incomes||[];
-    incomes.push({name:document.querySelector('.income_name').value,income:parseFloat(document.querySelector('.income_amount').value),date:document.querySelector('.income_date').value});
-    localStorage.setItem('incomeObject', JSON.stringify(incomes));
-    render();
-    cancel();
-}
+
 function dateto_timeline_name(datestr){
 	const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 	const date1array=datestr.split('-');
