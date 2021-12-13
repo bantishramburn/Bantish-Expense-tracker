@@ -91,7 +91,7 @@ body{
 .main-menu ul{
     opacity: 0;
     transform: scale(0);
-    background-color: rgba(0,255,0,0.8);;
+    background-color: rgba(46, 255, 138, 0.62);;
     margin: 0;
     transition: all 0.2s ease-in-out;
     transform-origin: top left;
@@ -122,20 +122,21 @@ body{
 }
 
 .tab .category{
-    padding: 10px;
+    padding: 15px;
     background-color: purple;
     margin-top: 10px;
-    border-radius: 20px;
-    color: #FFF;
+    border-radius: 16px;
+    color: rgb(23,23,23);
     text-align: center;
     cursor: pointer;
     font-size: 18px;
 }
 
 .tab .category.default{
+   
     cursor: default;
-    background: #DDD;
-    color: #bbb;
+    background-color: rgb(243,243,243);
+
 }
 .addbtn{
     background-color:#000;
@@ -319,6 +320,10 @@ body{
 .form-modal-content input,.form-modal-content select{
     margin: 10px 0 2px 0;
     width: 200px;
+}
+.form-modal-content input[type="color"]{
+    width:224px;
+    padding: 0;
 }
 .form-modal-content select{
     width: 224px;

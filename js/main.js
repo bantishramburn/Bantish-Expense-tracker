@@ -1,3 +1,55 @@
+function renderChart(){
+    const el=document.getElementById('myChart');
+    if(el!=null){
+    el.remove();
+    }
+const canvas=document.createElement('canvas');
+canvas.setAttribute('id','myChart');
+document.getElementById('tab-stats').prepend(canvas);
+
+const ctx = document.getElementById('myChart').getContext('2d');
+const labels=[];
+const colors=[];
+const expenses_by_category=[];
+
+for(let i in expenses){
+    if(!labels.includes(expenses[i].category)){
+        labels.push(expenses[i].category);
+        for(j in categories){
+            if(categories[j].name==expenses[i].category)
+        colors.push(categories[j].color);
+        }
+    }
+}
+for(let i in labels){
+    let total_category=0;
+    for(let j in expenses){
+        if(expenses[j].category==labels[i]){
+            total_category+=expenses[j].amount;
+        }
+    }
+    expenses_by_category.push(total_category);
+}
+
+const data = {
+    labels:labels,
+    datasets: [{
+      label: 'My Expenses',
+      data: expenses_by_category,
+      backgroundColor:colors,
+      hoverOffset: 4
+    }]
+  };
+
+
+ 
+
+    const myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data:    data
+    });
+   
+}
 //array of incomes as we can have multiple income sources
 let incomes=[];
 
@@ -11,59 +63,70 @@ let categories=[
     {
         name:'Car',
         default:true,
+        color:"rgb(2,246,197)"
 
     },
     {
         name:'Clothing',
-        default:true
+        default:true,
+        color:"rgb(255,201,44)"
     },
     {
         name:'Eating out',
         default:true,
+        color:"rgb(255,129,80)"
     },
     {
         name:'Loan',
         default:true,
+        color:"rgb(83,54,223)"
     },
     {
         name:'Rent',
-        default:true
+        default:true,
+        color:"rgb(66,116,244)"
     },
     {
         name:'Utilities',
         default:true,
+        color:"rgb(4,245,230)"
     },
     {
         name:'Other',
         default:true,
+        color:"rgb(117,202,239)"
     }
 ]
-//store default categories to localstorage
-let categoryObject = localStorage.getItem('categoryObject');
-if(categoryObject ==null){
-    localStorage.setItem('categoryObject', JSON.stringify(categories));
-}
-categories=JSON.parse(categoryObject);
-
-//retrieve expenses from localstorage
-let expenseObject = localStorage.getItem('expenseObject');
-if(expenseObject !=null){
-    expenses=JSON.parse(expenseObject);
-}
-
-//retrieve income from localstorage
-let incomeObject = localStorage.getItem('incomeObject');
-if(incomeObject !=null){
-    incomes=JSON.parse(incomeObject);
-}
+   //store default categories to localstorage
+   let categoryObject = localStorage.getItem('categoryObject');
+   if(categoryObject ==null){
+       localStorage.setItem('categoryObject', JSON.stringify(categories));
+       categoryObject = localStorage.getItem('categoryObject');
+   }
+   categories=JSON.parse(categoryObject);
+   
+   //retrieve expenses from localstorage
+   let expenseObject = localStorage.getItem('expenseObject');
+   if(expenseObject !=null){
+       expenses=JSON.parse(expenseObject);
+   }
+   
+   //retrieve income from localstorage
+   let incomeObject = localStorage.getItem('incomeObject');
+   if(incomeObject !=null){
+       incomes=JSON.parse(incomeObject);
+   }
 
 function render(){ // this function is called after each action performed ex: after adding an expense or after adding an income or any other action that requires the data on screen to be updated.
-    
+ 
+
+
+
     document.querySelector('#tab-categories .content').innerHTML="";
     document.querySelector('#tab-incomes .content').innerHTML="";
     document.querySelector('#tab-expenses .content').innerHTML="";
-    document.querySelector('#tab-stats').innerHTML="";
-    
+    //document.querySelector('#tab-stats').innerHTML="";
+   
     //rendering categories
     for(let i in categories){
         const newDiv = document.createElement("div");
@@ -72,7 +135,8 @@ function render(){ // this function is called after each action performed ex: af
         if(categories[i].default==true){
             newDiv.classList.add(`default`);
         }
-
+      
+newDiv.setAttribute('style',`background-color:${categories[i].color}`);
         // and give it some content
         const newContent = document.createTextNode(categories[i].name);
     
@@ -91,7 +155,7 @@ function render(){ // this function is called after each action performed ex: af
         // to get a value that is either negative, positive, or zero.
         const bdate=b.date.split('-');
         const adate=a.date.split('-');
-      console.log(bdate);
+      
         
         return new Date( parseInt(bdate[0]), parseInt(bdate[1])-1, parseInt(bdate[2]), 0, 0, 0, 0) - new Date(parseInt(adate[0]), parseInt(adate[1])-1, parseInt(adate[2]), 0, 0, 0, 0);
       });
@@ -101,7 +165,7 @@ function render(){ // this function is called after each action performed ex: af
         group_expenses[dateto_timeline_name(expenses[i].date)]=group_expenses[dateto_timeline_name(expenses[i].date)]||[];
         group_expenses[dateto_timeline_name(expenses[i].date)].push(expenses[i]);
     }
-    console.log(group_expenses);
+   
     for(let timeline in group_expenses){
         ex=group_expenses[timeline];
         for(let i in ex){
@@ -135,7 +199,7 @@ function render(){ // this function is called after each action performed ex: af
             //element for category title and expense description 
             const expenseAmountDiv= document.createElement("div");
             expenseAmountDiv.classList.add('column-3');
-            const amount=document.createTextNode(`Rs ${ex[i].amount.toFixed(2)}`);
+            const amount=document.createTextNode(`Rs ${ex[i].amount}`);
             expenseAmountDiv.appendChild(amount);
             totalExpenses+=ex[i].amount;
 
@@ -158,7 +222,7 @@ function render(){ // this function is called after each action performed ex: af
 
     let totalIncome=0;
     incomes.sort(function(a,b){
-        console.log(b);
+       
         // Turn your strings into dates, and then subtract them
         // to get a value that is either negative, positive, or zero.
         const bdate=b.date.split('-');
@@ -211,6 +275,7 @@ function render(){ // this function is called after each action performed ex: af
 }
 window.onload=(event) => {
     render();
+    renderChart();
   };
 
 function showmenu(){
@@ -228,6 +293,9 @@ function showtab(tab){
       });
 
     document.querySelector(`#${tab}`).classList.add('active');
+    if(document.querySelector('.main-menu ul').classList.contains('show')){
+        document.querySelector('.main-menu ul').classList.remove('show');
+    }
     
 }
 
@@ -245,7 +313,6 @@ function cancel(){
     setTimeout(function(){
         document.querySelector('.form-modal-title').innerHTML='';
         document.querySelector('.form-modal-content').innerHTML='';
-        document.querySelector('.form-modal-action .column-2').innerHTML='';
     },1000);
    
 }
@@ -269,6 +336,13 @@ function showAddCategoryModal(){
     categoryInput.setAttribute('placeholder','Category name');
     categoryInput.addEventListener('keyup',activateCatSave);
     inputDivWrapper.append(categoryInput);
+
+    const colorInput=document.createElement('input');
+    colorInput.setAttribute('type','color');
+    colorInput.setAttribute('value','#ff0000')
+    colorInput.classList.add('category-color');
+    inputDivWrapper.append(colorInput);
+
     form.append(inputDivWrapper);
 
     const formModalAction=document.createElement('div');
@@ -301,46 +375,6 @@ function activateCatSave(){
     }else{
         document.querySelector('.btnsave').classList.remove('active');
     }
-}
-
-window.onload=(event) => {
-    render();
-  };
-
-function showmenu(){
-    if(document.querySelector('.main-menu ul').classList.contains('show')){
-        document.querySelector('.main-menu ul').classList.remove('show');
-    }else{
-        document.querySelector('.main-menu ul').classList.add('show');
-    }  
-}
-
-function showtab(tab){
-    let t= document.querySelectorAll(`.tab`);
-    t.forEach( function(currentValue, currentIndex,listObj ) {
-        currentValue.classList.remove('active');
-      });
-
-    document.querySelector(`#${tab}`).classList.add('active');
-    
-}
-
-
-function toSpan(str,classname){
-    const span=document.createElement('span');
-    span.classList.add(classname);
-    span.append(document.createTextNode(str));
-    return span;
-}
-
-function cancel(){
-
-    document.querySelector('.form-modal-overlay').classList.add('hidden');
-    setTimeout(function(){
-        document.querySelector('.form-modal-title').innerHTML='';
-        document.querySelector('.form-modal-content').innerHTML='';
-    },1000);
-   
 }
 
 function showAddExpenseModal(){

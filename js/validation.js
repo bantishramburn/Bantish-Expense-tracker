@@ -46,7 +46,7 @@ function saveIncome(e){
     }
     //date validation
     const income_date=document.querySelector('.income_date').value;
-    const regex1 = new RegExp(/^(19|20)\d{2}-(0[1-9]|1\d|2\d|3[01])-(0[1-9]|1[0-2])$/);
+    const regex1 = new RegExp(/^(19|20)\d{2}-(0[1-9]|1[0-2]-(0[1-9]|1\d|2\d|3[01]))$/);
  
     //test for valid date format
     if(!regex1.test(income_date)){
@@ -67,21 +67,55 @@ if(err) return;
 
 
 function saveExpense(e){
+
+    let err=false;
+
+    //prevent form from submitting
     e.preventDefault(); 
+    
+    //remove error messages if any
     removeErrorMsg();
 
+    let expense_description=document.querySelector('.expense_description').value;
+
+    if(expense_description.length==0){
+        addErr("Expense description is required.",'.expense_description');
+        err=true;
+    }
+    
+    //amount validation
+    const amount=document.querySelector('.expense_amount').value;
+    const regex = new RegExp(/^\d+(\.\d+)?$/);
+
+    if(!regex.test(amount)){
+        addErr("Expense amount is invalid.",'.expense_amount');
+        err=true;
+    }
+     //date validation
+     const expense_date=document.querySelector('.expense_date').value;
+     const regex1 = new RegExp(/^(19|20)\d{2}-(0[1-9]|1[0-2]-(0[1-9]|[12][0-9]|3[01]))$/);
+
+     //test for valid date format
+    if(!regex1.test(expense_date)){
+        addErr("Date is invalid.",'.expense_date');
+         err=true;
+     }
+    
+    if(err) return;
+
     expenses=expenses||[];
-    console.log(expenses);
-        expenses.push({description:document.querySelector('.expense_description').value,category:document.querySelector('.expense_category').value,amount:parseFloat(document.querySelector('.expense_amount').value),date:document.querySelector('.expense_date').value});
+ 
+        expenses.push({description:expense_description,category:document.querySelector('.expense_category').value,amount:parseFloat(amount),date:expense_date});
         localStorage.setItem('expenseObject', JSON.stringify(expenses));
         render();
+        renderChart();
         cancel();
 }
 
 
 function saveCategory(e){
     e.preventDefault(); 
-    categories.push({name:document.querySelector('.cat_input').value,default:false});
+    categories.push({name:document.querySelector('.cat_input').value,default:false,color:document.querySelector('.category-color').value});
     //save to local storage
     localStorage.setItem('categoryObject', JSON.stringify(categories));
 
