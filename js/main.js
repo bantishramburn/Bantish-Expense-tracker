@@ -5,7 +5,7 @@ function renderChart(){
     }
 const canvas=document.createElement('canvas');
 canvas.setAttribute('id','myChart');
-document.getElementById('tab-stats').prepend(canvas);
+document.querySelector('#tab-stats .content').prepend(canvas);
 
 const ctx = document.getElementById('myChart').getContext('2d');
 const labels=[];
@@ -50,6 +50,9 @@ const data = {
     });
    
 }
+//array of recently added income and expenses
+const recentlyAdded=[];
+
 //array of incomes as we can have multiple income sources
 let incomes=[];
 
@@ -271,6 +274,21 @@ newDiv.setAttribute('style',`background-color:${categories[i].color}`);
     totalIncomeDiv.append(toSpan(totalIncome.toFixed(2),'amount'));
     totalIncomeDiv.append(toSpan('MUR','mur'));
     document.querySelector('#tab-incomes .content').prepend(totalIncomeDiv);
+
+
+    //render recently added record
+    recentlyAddedRecord();
+    document.querySelector('.recentlyadded').innerHTML='';
+    const ulEl=document.createElement('ul');
+    for(i in recentlyAdded){
+        const newLi=document.createElement('li');
+        const date_array=recentlyAdded[i].date_added.replace(' ','-').replace(/:/g,'-').split('-');
+        const d=new Date(date_array[0],parseInt(date_array[1])-1,date_array[2],date_array[3],date_array[4],date_array[5]);
+        newLi.innerHTML=`${d.toLocaleString('en-GB', { timeZone: 'UTC' })} Recently added ${(recentlyAdded[i].category!=undefined?` expense - ${recentlyAdded[i].description}`:`income - ${recentlyAdded[i].name}`)}`;
+        ulEl.append(newLi);
+    }
+    document.querySelector('.recentlyadded').append(ulEl);
+
 
 }
 window.onload=(event) => {
@@ -580,4 +598,41 @@ function getWeekNumber(d) {
     var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
     // Return array of year and week number
     return [d.getUTCFullYear(), weekNo];
+}
+
+//group recenlty added record
+
+function recentlyAddedRecord(){
+    for(i in incomes){
+        const date_added=incomes[i].date_added;
+        const date_array=date_added.replace(' ','-').replace(/:/g,'-').split('-');
+        const date_added_obj=new Date(date_array[0],date_array[1]-1,date_array[2],date_array[3],date_array[4],date_array[5]);
+        const now=new Date();
+        const hours = Math.abs(now - date_added_obj) / 36e5;
+        if(hours<=24){ // if less or equal than 24 hours consider as recently added
+            recentlyAdded.push(incomes[i]);
+        }
+    }
+    for(i in expenses){
+        const date_added=expenses[i].date_added;
+        const date_array=date_added.replace(' ','-').replace(/:/g,'-').split('-');
+        const date_added_obj=new Date(date_array[0],date_array[1]-1,date_array[2],date_array[3],date_array[4],date_array[5]);
+        const now=new Date();
+        const hours = Math.abs(now - date_added_obj) / 36e5;
+        if(hours<=24){ // if less or equal than 24 hours consider as recently added
+            recentlyAdded.push(expenses[i]);
+        }
+    }
+
+    recentlyAdded.sort(function(a,b){
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        const bdate=b.date_added.replace(' ','-').replace(/:/g,'-').split('-');
+        const adate=a.date_added.replace(' ','-').replace(/:/g,'-').split('-');
+      
+        
+        return new Date( parseInt(bdate[0]), parseInt(bdate[1])-1, parseInt(bdate[2]), parseInt(bdate[3]),parseInt(bdate[4]), parseInt(bdate[5]), 0) - new Date(parseInt(adate[0]), parseInt(adate[1])-1, parseInt(adate[2]), parseInt(adate[3]), parseInt(adate[4]), parseInt(adate[5]), 0);
+      });
+
+ 
 }

@@ -58,8 +58,13 @@ function saveIncome(e){
 if(err) return;
 
 // add new income
+
+const date = new Date();
+const [month, day, year]       = [date.getMonth(), date.getDate(), date.getFullYear()];
+const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+
      incomes=incomes||[];
-    incomes.push({name:income_name,income:parseFloat(amount),date:income_date});
+    incomes.push({name:income_name,income:parseFloat(amount),date:income_date,date_added:`${year}-${(month+1)}-${day} ${hour}:${minutes}:${seconds}`});
     localStorage.setItem('incomeObject', JSON.stringify(incomes));
     render();
     cancel();
@@ -105,7 +110,10 @@ function saveExpense(e){
 
     expenses=expenses||[];
  
-        expenses.push({description:expense_description,category:document.querySelector('.expense_category').value,amount:parseFloat(amount),date:expense_date});
+const date = new Date();
+const [month, day, year]       = [date.getMonth(), date.getDate(), date.getFullYear()];
+const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+        expenses.push({description:expense_description,category:document.querySelector('.expense_category').value,amount:parseFloat(amount),date:expense_date,date_added:`${year}-${(month+1)}-${day} ${hour}:${minutes}:${seconds}`});
         localStorage.setItem('expenseObject', JSON.stringify(expenses));
         render();
         renderChart();
@@ -115,7 +123,10 @@ function saveExpense(e){
 
 function saveCategory(e){
     e.preventDefault(); 
-    categories.push({name:document.querySelector('.cat_input').value,default:false,color:document.querySelector('.category-color').value});
+const date = new Date();
+const [month, day, year]       = [date.getMonth(), date.getDate(), date.getFullYear()];
+const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSeconds()];
+    categories.push({name:document.querySelector('.cat_input').value,default:false,color:document.querySelector('.category-color').value,date_added:`${year}-${(month+1)}-${day} ${hour}:${minutes}:${seconds}`});
     //save to local storage
     localStorage.setItem('categoryObject', JSON.stringify(categories));
 

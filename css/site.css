@@ -44,7 +44,9 @@
 
 }
 
-
+html,body{
+    height: 100%;
+}
 body{
     font-family: montserratlight;
 }
@@ -52,6 +54,7 @@ body{
     position: relative;
     max-width: 1000px;
     margin: 0 auto;
+    height: 100%;
 }
 
 .main-menu{
@@ -91,14 +94,27 @@ body{
 .main-menu ul{
     opacity: 0;
     transform: scale(0);
-    background-color: rgba(46, 255, 138, 0.62);;
-    margin: 0;
+    background: #E0E0E0;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.12);
+    border-radius: 4px;
+    min-width: 184px;
+    padding: 45px 1rem 37px 1rem;
     transition: all 0.2s ease-in-out;
     transform-origin: top left;
-
+    position: absolute;
+    z-index: 1;
+    list-style-type: none;
+    margin: 0;
 }
 .main-menu ul li{
     cursor: pointer;
+    margin-bottom: 8px;
+    padding: 5px;
+}
+.main-menu ul li:hover{
+    background-color: #42A71E;
+    color:#FFF;
+   
 }
 
 .main-menu ul.show{
@@ -278,7 +294,7 @@ body{
 }
 .form-modal-overlay{
     background-color: rgba(0,0,0,0.7);
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 100%;
     top:0;
@@ -420,4 +436,25 @@ font-family: montserratlight;
     font-size: 14px;
     color: red;
     width: 222px;
+}
+
+.recentlyadded ul li {
+    color: cornflowerblue;
+    font-style: italic;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.recentlyadded ul{
+    margin-bottom: 20px;
+    list-style-type:none;
+}
+
+@media screen and (max-width: 500px) {
+    h1{
+        font-size: 18px;
+    }
+    .form-modal {
+        min-width: 250px;
+    }
 }
