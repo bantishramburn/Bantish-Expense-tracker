@@ -292,6 +292,7 @@ newDiv.setAttribute('style',`background-color:${categories[i].color}`);
 
 }
 window.onload=(event) => {
+    document.querySelector('.menu-icon').addEventListener('click',showmenu);
     render();
     renderChart();
   };
