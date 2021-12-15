@@ -297,7 +297,9 @@ window.onload=(event) => {
     document.querySelector('.tab-incomes').addEventListener('click',showtabincomes);
     document.querySelector('.tab-expenses').addEventListener('click',showtabexpenses);
     document.querySelector('.tab-categories').addEventListener('click',showtabcategories);
-
+    document.getElementById('showAddIncomeModal').addEventListener('click',showAddIncomeModal);
+    document.getElementById('showAddExpenseModal').addEventListener('click',showAddExpenseModal);
+    document.getElementById('showAddCategoryModal').addEventListener('click',showAddCategoryModal);
  
     render();
     renderChart();
