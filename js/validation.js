@@ -1,4 +1,4 @@
-
+//remove form error message 
 function removeErrorMsg(){
     const errSpans=document.querySelectorAll('.errSpan');
     errSpans.forEach(
@@ -8,7 +8,7 @@ function removeErrorMsg(){
       );
 
 }
-
+//display form error message
 function addErr(msg,afterEl){
     const errSpan=document.createElement('span');
     errSpan.classList.add('errSpan');
@@ -116,7 +116,7 @@ const [hour, minutes, seconds] = [date.getHours(), date.getMinutes(), date.getSe
         expenses.push({description:expense_description,category:document.querySelector('.expense_category').value,amount:parseFloat(amount),date:expense_date,date_added:`${year}-${(month+1)}-${day} ${hour}:${minutes}:${seconds}`});
         localStorage.setItem('expenseObject', JSON.stringify(expenses));
         render();
-        renderChart();
+        renderChart(); // re render the chart each time a new expense is added
         cancel();
 }
 

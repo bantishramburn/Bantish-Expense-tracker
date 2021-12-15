@@ -3,6 +3,7 @@ function renderChart(){
     if(el!=null){
     el.remove();
     }
+    //recreate cavas element if renderChart is called again
 const canvas=document.createElement('canvas');
 canvas.setAttribute('id','myChart');
 document.querySelector('#tab-stats .content').prepend(canvas);
@@ -139,7 +140,7 @@ function render(){ // this function is called after each action performed ex: af
             newDiv.classList.add(`default`);
         }
       
-newDiv.setAttribute('style',`background-color:${categories[i].color}`);
+    newDiv.setAttribute('style',`background-color:${categories[i].color}`);
         // and give it some content
         const newContent = document.createTextNode(categories[i].name);
     
@@ -165,6 +166,7 @@ newDiv.setAttribute('style',`background-color:${categories[i].color}`);
 
     let group_expenses=[];
     for(let i in expenses){
+        //group expenses in by timeline
         group_expenses[dateto_timeline_name(expenses[i].date)]=group_expenses[dateto_timeline_name(expenses[i].date)]||[];
         group_expenses[dateto_timeline_name(expenses[i].date)].push(expenses[i]);
     }
@@ -292,6 +294,7 @@ newDiv.setAttribute('style',`background-color:${categories[i].color}`);
 
 }
 window.onload=(event) => {
+    //bind click events
     document.querySelector('.menu-icon').addEventListener('click',showmenu);
     document.querySelector('.tab-stats').addEventListener('click',showtabstats);
     document.querySelector('.tab-incomes').addEventListener('click',showtabincomes);
@@ -317,26 +320,26 @@ window.onload=(event) => {
     function showtabcategories(){
         showtab('tab-categories');
     }
-function showmenu(){
-    if(document.querySelector('.main-menu ul').classList.contains('show')){
-        document.querySelector('.main-menu ul').classList.remove('show');
-    }else{
-        document.querySelector('.main-menu ul').classList.add('show');
-    }  
-}
-
-function showtab(tab){
-    let t= document.querySelectorAll(`.tab`);
-    t.forEach( function(currentValue, currentIndex,listObj ) {
-        currentValue.classList.remove('active');
-      });
-
-    document.querySelector(`#${tab}`).classList.add('active');
-    if(document.querySelector('.main-menu ul').classList.contains('show')){
-        document.querySelector('.main-menu ul').classList.remove('show');
+    function showmenu(){
+        if(document.querySelector('.main-menu ul').classList.contains('show')){
+            document.querySelector('.main-menu ul').classList.remove('show');
+        }else{
+            document.querySelector('.main-menu ul').classList.add('show');
+        }  
     }
-    
-}
+
+    function showtab(tab){
+        let t= document.querySelectorAll(`.tab`);
+        t.forEach( function(currentValue, currentIndex,listObj ) {
+            currentValue.classList.remove('active');
+        });
+
+        document.querySelector(`#${tab}`).classList.add('active');
+        if(document.querySelector('.main-menu ul').classList.contains('show')){
+            document.querySelector('.main-menu ul').classList.remove('show');
+        }
+        
+    }
 
 
 function toSpan(str,classname){
@@ -346,6 +349,7 @@ function toSpan(str,classname){
     return span;
 }
 
+//close form modal
 function cancel(){
 
     document.querySelector('.form-modal-overlay').classList.add('hidden');
@@ -407,7 +411,7 @@ function showAddCategoryModal(){
 }
 
 
-
+//activate save button only when category name is specified
 function activateCatSave(){
     if(document.querySelector('.cat_input').value.length>0){
         document.querySelector('.btnsave').classList.add('active');
