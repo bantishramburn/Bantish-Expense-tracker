@@ -293,10 +293,28 @@ newDiv.setAttribute('style',`background-color:${categories[i].color}`);
 }
 window.onload=(event) => {
     document.querySelector('.menu-icon').addEventListener('click',showmenu);
+    document.querySelector('.tab-stats').addEventListener('click',showtabstats);
+    document.querySelector('.tab-incomes').addEventListener('click',showtabincomes);
+    document.querySelector('.tab-expenses').addEventListener('click',showtabexpenses);
+    document.querySelector('.tab-categories').addEventListener('click',showtabcategories);
+
+ 
     render();
     renderChart();
   };
 
+  function showtabstats(){
+      showtab('tab-stats');
+  }
+  function showtabincomes(){
+    showtab('tab-incomes');
+    }
+    function showtabexpenses(){
+        showtab('tab-expenses');
+    }
+    function showtabcategories(){
+        showtab('tab-categories');
+    }
 function showmenu(){
     if(document.querySelector('.main-menu ul').classList.contains('show')){
         document.querySelector('.main-menu ul').classList.remove('show');

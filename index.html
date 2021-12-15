@@ -11,18 +11,18 @@
     <script  src="js/validation.js"></script>
 </head>
 <body>
- 
-    <div class="main-wrapper">
-        <h1>Expense Tracker</h1>
+ <header>     <h1>Expense Tracker</h1></header>
+    <main class="main-wrapper">
+   
         <span class="menu-icon" >
             <span></span>
         </span>
         <div class="main-menu ">
             <ul class="shadow">
-                <li onclick="showtab('tab-stats')">Homepage/Dashboard</li> 
-                <li onclick="showtab('tab-incomes')">Income</li>
-                <li onclick="showtab('tab-expenses')">Expenses</li>
-                <li onclick="showtab('tab-categories')">Manage categories</li>
+                <li class="tab-stats" >Homepage/Dashboard</li> 
+                <li class="tab-incomes" >Income</li>
+                <li class="tab-expenses" >Expenses</li>
+                <li class="tab-categories">Manage categories</li>
              
             </ul>
         </div>
@@ -46,7 +46,7 @@
                 <span onclick="showAddCategoryModal()" class="addbtn shadow"></span>
             </div>
         </div>
-    </div>
+    </main>
     <div class="form-modal-overlay hidden">
         <div class="form-modal">
             <div class="form-modal-title"></div>
