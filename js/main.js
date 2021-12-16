@@ -470,7 +470,7 @@ function showAddExpenseModal(){
     const expensenameInput=document.createElement('input');
     expensenameInput.classList.add('expense_description');
     expensenameInput.setAttribute('type','text');
-    expensenameInput.setAttribute('placeholder','Name');
+    expensenameInput.setAttribute('placeholder','Description');
     inputDivWrapper.append(expensenameInput);
   
 
