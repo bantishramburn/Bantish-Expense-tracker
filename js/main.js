@@ -52,7 +52,7 @@ const data = {
    
 }
 //array of recently added income and expenses
-const recentlyAdded=[];
+let recentlyAdded=[];
 
 //array of incomes as we can have multiple income sources
 let incomes=[];
@@ -282,20 +282,37 @@ function render(){ // this function is called after each action performed ex: af
     recentlyAddedRecord();
     document.querySelector('.recentlyadded').innerHTML='';
     const ulEl=document.createElement('ul');
+  
     for(i in recentlyAdded){
         const newLi=document.createElement('li');
         const date_array=recentlyAdded[i].date_added.replace(' ','-').replace(/:/g,'-').split('-');
         const d=new Date(date_array[0],parseInt(date_array[1])-1,date_array[2],date_array[3],date_array[4],date_array[5]);
+        if(recentlyAdded[i].category!=undefined){
+            newLi.addEventListener('click',showtabexpenses);
+        }else{
+            newLi.addEventListener('click',showtabincomes);  
+        }
         newLi.innerHTML=`${d.toLocaleString('en-GB', { timeZone: 'UTC' })} Recently added ${(recentlyAdded[i].category!=undefined?` expense - ${recentlyAdded[i].description}`:`income - ${recentlyAdded[i].name}`)}`;
         ulEl.append(newLi);
     }
     document.querySelector('.recentlyadded').append(ulEl);
 
+    let balance=totalIncome-totalExpenses;
+    document.querySelector('#tab-stats .total').classList.remove('debt'); 
+    document.querySelector('#tab-stats .total').classList.remove('savings'); 
+    if(balance>0){
+        document.querySelector('#tab-stats .total').classList.add('savings'); 
+    }
+    if(balance<0){
+        document.querySelector('#tab-stats .total').classList.add('debt'); 
+    }
+    document.querySelector('#tab-stats .total .amount').innerHTML=balance.toFixed(2);
 
 }
 window.onload=(event) => {
     //bind click events
     document.querySelector('.menu-icon').addEventListener('click',showmenu);
+    document.querySelector('.txt-menu').addEventListener('click',showmenu);
     document.querySelector('.tab-stats').addEventListener('click',showtabstats);
     document.querySelector('.tab-incomes').addEventListener('click',showtabincomes);
     document.querySelector('.tab-expenses').addEventListener('click',showtabexpenses);
@@ -308,16 +325,20 @@ window.onload=(event) => {
     renderChart();
   };
 
-  function showtabstats(){
-      showtab('tab-stats');
-  }
-  function showtabincomes(){
-    showtab('tab-incomes');
+    function showtabstats(){
+        document.querySelector('#page').innerHTML="";
+        showtab('tab-stats');
+    }
+    function showtabincomes(){
+        document.querySelector('#page').innerHTML="My incomes";
+        showtab('tab-incomes');
     }
     function showtabexpenses(){
+        document.querySelector('#page').innerHTML="My expenses";
         showtab('tab-expenses');
     }
     function showtabcategories(){
+        document.querySelector('#page').innerHTML="Manage categories";
         showtab('tab-categories');
     }
     function showmenu(){
@@ -628,6 +649,7 @@ function getWeekNumber(d) {
 //group recenlty added record
 
 function recentlyAddedRecord(){
+    recentlyAdded=[];
     for(i in incomes){
         const date_added=incomes[i].date_added;
         const date_array=date_added.replace(' ','-').replace(/:/g,'-').split('-');
@@ -659,5 +681,4 @@ function recentlyAddedRecord(){
         return new Date( parseInt(bdate[0]), parseInt(bdate[1])-1, parseInt(bdate[2]), parseInt(bdate[3]),parseInt(bdate[4]), parseInt(bdate[5]), 0) - new Date(parseInt(adate[0]), parseInt(adate[1])-1, parseInt(adate[2]), parseInt(adate[3]), parseInt(adate[4]), parseInt(adate[5]), 0);
       });
 
- 
 }
