@@ -326,7 +326,7 @@ window.onload=(event) => {
   };
 
     function showtabstats(){
-        document.querySelector('#page').innerHTML="";
+        document.querySelector('#page').innerHTML="Welcome to your dashboard";
         showtab('tab-stats');
     }
     function showtabincomes(){
